@@ -1,43 +1,56 @@
-document.getElementById('cadastrarFilme').addEventListener('click', function() {
-    const nomeFilme = document.getElementById('nomeFilme').value;
-    const generoFilme = document.getElementById('generoFilme').value;
-    const classificacaoFilme = document.getElementById('classificacao').value;
-    const descricaoFilme = document.getElementById('descricaoFilme').value;
-    const idioma = document.getElementById('idioma').value;
-    const imagemFilme = document.getElementById('imagemFilme').files[0];
-
-    const formData = new FormData();
-    formData.append('nomeFilme', nomeFilme);
-    formData.append('generoFilme', generoFilme);
-    formData.append('classificacaoFilme', classificacaoFilme);
-    formData.append('descricaoFilme', descricaoFilme);
-    formData.append('idiomaFilme', idioma);
-    if (imagemFilme) {
-        formData.append('imagemFilme', imagemFilme);
-    }
-
-    fetch('/salvarFilme', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-        const mensagem = document.createElement('div');
-        mensagem.innerText = 'Filme cadastrado com sucesso!';
-        mensagem.style.color = 'green';
-        document.body.appendChild(mensagem);
-        setTimeout(() => {
-            document.body.removeChild(mensagem);
-        }, 3000);
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-        const mensagemErro = document.createElement('div');
-        mensagemErro.innerText = 'Erro ao cadastrar o filme!';
-        mensagemErro.style.color = 'red';
-        document.body.appendChild(mensagemErro);
-        setTimeout(() => {
-            document.body.removeChild(mensagemErro);
-        }, 3000);
+window.onload = () => {
+    carregarFilmes();
+};
+function carregarFilmes(){
+    fetch('/filmes')
+        .then(response => response.json())
+        .then(filmes => {
+            const container = document.getElementById('filmesContainer');
+            filmes.forEach(filme => {
+                const filmeDiv = document.createElement('div');
+                filmeDiv.classList.add('filme-item');
+                filmeDiv.innerHTML = `
+                    <button class="filme-imagem-btn" data-nome="${filme.nome}" data-genero="${filme.genero}" data-classificacao="${filme.classificacao}" data-descricao="${filme.descricao}" data-idioma="${filme.idioma}" data-imagem="/uploads/${filme.imagem}">
+                        <img src="/uploads/${filme.imagem}" alt="${filme.nome}" style="width: 200px; height: auto;">
+                    </button>
+                `;
+                container.appendChild(filmeDiv);
+            });
+            document.querySelectorAll('.filme-imagem-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const nome = event.currentTarget.getAttribute('data-nome');
+                    const genero = event.currentTarget.getAttribute('data-genero');
+                    const classificacao = event.currentTarget.getAttribute('data-classificacao');
+                    const descricao = event.currentTarget.getAttribute('data-descricao');
+                    const idioma = event.currentTarget.getAttribute('data-idioma');
+                    const imagem = event.currentTarget.getAttribute('data-imagem');
+                    mostrarInformacoes(nome, genero, classificacao, descricao, idioma, imagem);
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Erro ao carregar filmes:', error);
+        });
+}
+function mostrarInformacoes(nome, genero, classificacao, descricao, idioma, imagem) {
+    const filmesContainer = document.getElementById('filmesContainer');
+    const detalhes = document.getElementById('detalhesFilme');
+    filmesContainer.style.display = 'none';
+    // Mostra as informacoes do filme
+    detalhes.innerHTML = `
+        <img src="${imagem}" alt="${nome}" style="width: 200px; height: auto;">
+        <div>
+            <h3>${nome}</h3>
+            <p>Gênero: ${genero}</p>
+            <p>Classificação: ${classificacao}</p>
+            <p>Descrição: ${descricao}</p>
+            <p>Idioma: ${idioma}</p>
+        </div>
+        <button id="voltarButton">Voltar</button>
+    `;
+    document.getElementById('voltarButton').addEventListener('click', () => {
+        //Mostra a tela de filmes novamente
+        filmesContainer.style.display = 'flex';
+        detalhes.innerHTML = '';
     });
-});
+}
