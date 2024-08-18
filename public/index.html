@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toten Cinema</title>
+</head>
+<body>
+    <header>
+        <h2>Cinema</h2>
+    </header>
+    <div>
+        <h2>Filmes em cartaz</h2>
+    </div>
+    <form class="filmes" id="formFilme">
+        <label>Nome do filme:</label>
+        <input type="text" name="nomeFilme" id="nomeFilme">
+        <label>Gênero:</label>
+        <input type="text" name="generoFilme" id="generoFilme">
+        <label>Classificação:</label>
+        <select name="classificacao" id="classificacao">
+            <option value="" disabled selected>Selecione</option>
+            <option value="Livre">Livre</option>
+            <option value="dezAnos">10 anos</option>
+            <option value="dozeanos">12 anos</option>
+            <option value="quartozeAnos">14 anos</option>
+            <option value="desseseisAnos">16 anos</option>
+            <option value="dezoitoAnos">18 anos</option>
+        </select>
+        <label>Descrição:</label>
+        <input type="text" name="descricaoFilme" id="descricaoFilme">
+        <label>Idioma:</label>
+        <select name="idioma" id="idioma">
+            <option value="" disabled selected>Selecione</option>
+            <option value="Legendado">Legendado</option>
+            <option value="Dublado">Dublado</option>
+            <option value="Ambos">Ambos</option>
+        </select>
+        <label>Imagem de capa:</label>
+        <input type="file" name="imagemFilme" id="imagemFilme" accept="image/*">
+    </form>
+    <div id="informacoesFilmeContainer"></div>
+    <input type="button" name="cadastrarFilme" id="cadastrarFilme" value="Cadastrar">
+    <input type="button" name="adicionar" id="adicionar" value="Adicionar filme">
+    <form class="horario">
+        <label>Selecione o horário:</label>
+        <input type="button" name="horario1" id="horario1" value="18:20">
+        <input type="button" name="horario2" id="horario2" value="20:20">
+        <input type="button" name="horario3" id="horario3" value="21:20">
+    </form>
+    <input type="button" name="confirmar" id="confirmar">
+    <form class="assento">
+        <label>Escolha a fileira de A até L:</label>
+        <input type="text" name="fileira" id="fileira">
+        <label>Escolha o número do assento:</label>
+        <input type="number" name="numAssento" id="numAssento">
+    </form>
+    <script src="script.js"></script>
+</body>
+</html>
