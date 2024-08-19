@@ -1,17 +1,19 @@
 window.onload = () => {
     carregarFilmes();
 };
-function carregarFilmes(){
+
+function carregarFilmes() {
     fetch('/filmes')
         .then(response => response.json())
         .then(filmes => {
-            const container = document.getElementById('filmesContainer');
+            const container = document.getElementById('filmesContainerTotem');
+            container.innerHTML = ''; // Limpa o contêiner antes de adicionar novos filmes
             filmes.forEach(filme => {
                 const filmeDiv = document.createElement('div');
                 filmeDiv.classList.add('filme-item');
                 filmeDiv.innerHTML = `
                     <button class="filme-imagem-btn" data-nome="${filme.nome}" data-genero="${filme.genero}" data-classificacao="${filme.classificacao}" data-descricao="${filme.descricao}" data-idioma="${filme.idioma}" data-imagem="/uploads/${filme.imagem}">
-                        <img src="/uploads/${filme.imagem}" alt="${filme.nome}" style="width: 200px; height: auto;">
+                        <img src="/uploads/${filme.imagem}" alt="${filme.nome}">
                     </button>
                 `;
                 container.appendChild(filmeDiv);
@@ -32,13 +34,13 @@ function carregarFilmes(){
             console.error('Erro ao carregar filmes:', error);
         });
 }
+
 function mostrarInformacoes(nome, genero, classificacao, descricao, idioma, imagem) {
-    const filmesContainer = document.getElementById('filmesContainer');
-    const detalhes = document.getElementById('detalhesFilme');
+    const filmesContainer = document.getElementById('filmesContainerTotem');
+    const detalhes = document.getElementById('detalhesFilmeTotem');
     filmesContainer.style.display = 'none';
-    // Mostra as informacoes do filme
     detalhes.innerHTML = `
-        <img src="${imagem}" alt="${nome}" style="width: 200px; height: auto;">
+        <img src="${imagem}" alt="${nome}">
         <div>
             <h3>${nome}</h3>
             <p>Gênero: ${genero}</p>
@@ -48,9 +50,9 @@ function mostrarInformacoes(nome, genero, classificacao, descricao, idioma, imag
         </div>
         <button id="voltarButton">Voltar</button>
     `;
+    detalhes.style.display = 'block';
     document.getElementById('voltarButton').addEventListener('click', () => {
-        //Mostra a tela de filmes novamente
         filmesContainer.style.display = 'flex';
-        detalhes.innerHTML = '';
+        detalhes.style.display = 'none';
     });
 }

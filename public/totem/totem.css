@@ -1,0 +1,64 @@
+body {
+    background-color: black;
+    color: white;
+}
+#titulo {
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+    font-size: xx-large;
+    background-color: red;
+}
+#detalhesFilmeTotem {
+    display: none; 
+    text-align: justify;
+    padding: 20px;
+    background-color: rgb(33, 33, 33);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin: 20px auto;
+    max-width: 800px;
+    color: white;
+}
+#detalhesFilmeTotem h3 {
+    font-size: 30px;
+    margin: 0;
+    color: rgb(255, 0, 0); 
+}
+#detalhesFilmeTotem button {
+    margin-left: 730px;
+    padding: 10px;
+    background-color: rgb(156, 156, 156);
+    color: black;
+    border-radius: 10px;
+    border-color: transparent;
+    cursor: pointer;
+}
+#filmesContainerTotem {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin: 30px 0 0 0;
+    padding: 0;
+}
+.filme-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(33, 33, 33);
+    border-radius: 8px;
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+}
+.filme-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+.filme-item button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
