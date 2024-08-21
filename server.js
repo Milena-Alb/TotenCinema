@@ -44,13 +44,17 @@ app.get('/filmes', (req, res) => {
     });
 });
 app.post('/salvarFilme', upload.single('imagemFilme'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).send('Erro: Imagem do filme é obrigatória.');
+    }
     const novoFilme = {
+        id: req.file.filename,
         nome: req.body.nomeFilme,
         genero: req.body.generoFilme,
         classificacao: req.body.classificacaoFilme,
         descricao: req.body.descricaoFilme,
         idioma: req.body.idiomaFilme,
-        imagem: req.file ? req.file.filename : null 
+        imagem: req.file.filename
     };
     fs.readFile(arquivoFilmes, 'utf8', (err, data) => {
         if (err) {
@@ -72,6 +76,84 @@ app.post('/salvarFilme', upload.single('imagemFilme'), (req, res) => {
         });
     });
 });
+app.put('/filme/:id', upload.single('imagemFilme'), (req, res) => {
+    fs.readFile(arquivoFilmes, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Erro ao ler o arquivo:', err);
+            return res.status(500).send('Erro no servidor.');
+        }
+        let filmes = JSON.parse(data);
+        const filmeId = req.params.id;
+        let filmeIndex = filmes.findIndex(f => f.id == filmeId);
+
+        if (filmeIndex !== -1) {
+            const novaImagem = req.file ? req.file.filename : null;
+            const novoId = novaImagem || filmeId;
+            filmes[filmeIndex] = {
+                id: novoId,
+                nome: req.body.nomeFilme,
+                genero: req.body.generoFilme,
+                classificacao: req.body.classificacaoFilme,
+                descricao: req.body.descricaoFilme,
+                idioma: req.body.idiomaFilme,
+                imagem: novaImagem || filmes[filmeIndex].imagem
+            };
+            fs.writeFile(arquivoFilmes, JSON.stringify(filmes, null, 2), err => {
+                if (err) {
+                    console.error('Erro ao escrever no arquivo:', err);
+                    return res.status(500).send('Erro no servidor.');
+                }
+                res.send('Filme atualizado com sucesso.');
+            });
+        } else {
+            res.status(404).send('Filme não encontrado.');
+        }
+    });
+});
+app.delete('/filme/:id', (req, res) => {
+    const filmeId = req.params.id;
+    console.log(`Recebido pedido de exclusão para o filme com ID: ${filmeId}`);
+
+    if (!filmeId) {
+        return res.status(400).send('ID do filme não fornecido.');
+    }
+
+    fs.readFile(arquivoFilmes, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Erro ao ler o arquivo:', err);
+            return res.status(500).send('Erro no servidor.');
+        }
+
+        let filmes = JSON.parse(data);
+        const filme = filmes.find(f => f.id === filmeId);
+        if (!filme) {
+            console.log(`Filme com ID: ${filmeId} não encontrado.`);
+            return res.status(404).send('Filme não encontrado.');
+        }
+
+        filmes = filmes.filter(f => f.id !== filmeId);
+        const caminhoImagem = path.join(__dirname, 'uploads', filme.imagem);
+
+        fs.unlink(caminhoImagem, (err) => {
+            if (err) {
+                console.error('Erro ao remover a imagem:', err);
+                return res.status(500).send('Erro ao remover a imagem do servidor.');
+            }
+            console.log(`Imagem do filme com ID: ${filmeId} removida com sucesso.`);
+
+            fs.writeFile(arquivoFilmes, JSON.stringify(filmes, null, 2), err => {
+                if (err) {
+                    console.error('Erro ao escrever no arquivo:', err);
+                    return res.status(500).send('Erro no servidor.');
+                }
+                console.log(`Filme com ID: ${filmeId} excluído com sucesso.`);
+                res.send('Filme excluído com sucesso.');
+            });
+        });
+    });
+});
+
+
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`);
 });
