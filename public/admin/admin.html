@@ -11,8 +11,8 @@
         <h2 id="addFilmes">Administração de Filmes</h2>
     </header>
     <input type="button" name="adicionar" id="adicionarButton" value="Adicionar filme">
-    <!-- Formulário de cadastro de filme (inicialmente escondido) -->
     <form class="filmes" id="formCadastroFilme" action="/salvarFilme" method="POST" enctype="multipart/form-data" style="display: none;">
+        <input type="hidden" name="filmeId" id="filmeId"> <!-- Campo oculto para armazenar o ID do filme em atualização -->
         <label>Nome do filme:</label>
         <input type="text" name="nomeFilme" id="nomeFilme" required>
         <label>Gênero:</label>
@@ -37,12 +37,13 @@
             <option value="Legendado e Dublado">Ambos</option>
         </select>
         <label>Imagem de capa:</label>
-        <input type="file" name="imagemFilme" id="imagemFilme" accept="image/*" required>
-        <button type="submit">Cadastrar Filme</button>
+        <input type="file" name="imagemFilme" id="imagemFilme" accept="image/*">
+        <button type="submit" id="cadastrar">Cadastrar</button>
+        <button type="button" id="salvarAtualizacao" style="display: none;">Salvar</button>
         <button type="button" id="cancelar">Cancelar</button>
     </form>
     <div id="filmesContainerAdmin"></div>
-    <div id="detalhesFilmeAdmin"style="display: none;"></div>
+    <div id="detalhesFilmeAdmin" style="display: none;"></div>
     <script src="admin.js"></script>
 </body>
 </html>

@@ -22,5 +22,32 @@
     "descricao": "Wolverine está se recuperando quando cruza seu caminho com Deadpool. Juntos, eles formam uma equipe e enfrentam um inimigo em comum.",
     "idioma": "Legendado e Dublado",
     "imagem": "1724038152648.jpeg"
+  },
+  {
+    "id": "1724284275708.jpeg",
+    "nome": "O corvo",
+    "genero": "Ação/Fantasia",
+    "classificacao": "14 anos",
+    "descricao": "As almas gêmeas Eric Draven e Shelly Webster são brutalmente assassinadas quando os demônios de seu passado sombrio os alcançam. Atravessando os mundos dos vivos e dos mortos, Draven retorna em busca de vingança sangrenta contra os assassinos.",
+    "idioma": "Legendado e Dublado",
+    "imagem": "1724284275708.jpeg"
+  },
+  {
+    "id": "1724290393054.jpeg",
+    "nome": "Meu malvado favorito 4",
+    "genero": "Infantil/Comédia",
+    "classificacao": "Livre",
+    "descricao": "Gru dá as boas-vindas a um novo membro da família, Gru Jr., que pretende atormentar seu pai. No entanto, sua existência pacífica logo desmorona quando um mentor do crime escapa da prisão e jura vingança contra Gru.",
+    "idioma": "Legendado e Dublado",
+    "imagem": "1724290393054.jpeg"
+  },
+  {
+    "id": "1724702617340.jpg",
+    "nome": "Alien: Romulus",
+    "genero": "Terror/Ficção científica",
+    "classificacao": "16 anos",
+    "descricao": "Um grupo de jovens colonizadores espaciais se aventuram nas profundezas de uma estação espacial abandonada. Lá, eles descobrem uma forma de vida aterrorizante, forçando-os a lutar por sua sobrevivência.",
+    "idioma": "Legendado e Dublado",
+    "imagem": "1724702617340.jpg"
   }
 ]
